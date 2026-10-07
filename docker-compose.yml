@@ -1,0 +1,19 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bulk_certificate_generator
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./certificates.db
+      - ENVIRONMENT=production
+      - DEBUG=false
+    volumes:
+      - certificate_storage:/app/storage
+    restart: unless-stopped
+
+volumes:
+  certificate_storage:
+    driver: local
